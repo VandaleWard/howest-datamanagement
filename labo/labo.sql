@@ -114,10 +114,107 @@ order by categorienummer, nederlandsenaam;
 #1
 select *
 from tblproducten
-where nederlandsenaam like '%thee'
+where nederlandsenaam like '%thee%';
 
 #2
+select *
+from tblproducten
+where nederlandsenaam like '%vlees%' or nederlandsenaam like '%kaas%';
+
+#3
+select *
+from tblproducten
+where (nederlandsenaam like '%vlees%' or nederlandsenaam like '%kaas%')
+and prijsPerEenheid < 32;
+
+#4
+select concat(naam, ' uit ', gemeente) as "Klantnaam", gemeente
+from tblklanten
+where naam like 'Vander%';
+
+#5
+select concat(naam, ' uit ', gemeente) as "Klantnaam", gemeente
+from tblklanten
+where naam like 'Vander%t';
+
+#6
+select *
+from tblklanten
+where straat like '%dorp%';
+
+#7
+select *
+from tblleveranciers
+where bedrijf like '%an%' or bedrijf like '%foot%';
+
+-- oefeningen op regexp
+#1
+select productnummer, productnaam
+from tblproducten
+where productnaam regexp '^chef.*mix$';
+
+#2
+select productnaam
+from tblproducten
+where productnaam regexp binary 'c'
+order by productnaam;
+
+#3
+select productnaam
+from tblproducten
+where productnaam regexp binary '[cyB]'
+order by productnaam;
+
+#4
+select *
+from tblklanten
+where saldo regexp '^.{4}$';
+
+#5
+select *
+from tblbtwtarief
+where btwpercentage regexp '[0-9]\.[0-9]{2}';
+
+-- oefeningen op sorteren
+#1
+select *
+from tblklanten
+where type regexp '[wt]'
+order by naam;
+
+#2
+select *
+from tblklanten
+where type regexp '[wt]'
+order by type desc;
+
+#3
+select saldo, klantnummer, gemeente
+from tblklanten
+where saldo != 0
+order by saldo desc;
+
+#4
+select concat(familienaam, voornaam) as 'Naam', geboortedatum
+from tblwerknemers
+order by geboortedatum;
 
 
+-- oefeningen op select queries
+#1
+select familienaam, voornaam, gemeente, indienst
+from tblwerknemers
+where year(inDienst) = '1993';
+
+#2
+select *
+from tblklanten
+where gemeente like 'Leuven'
+order by naam;
+
+#3
+select familienaam, voornaam, gemeente, geslacht
+from tblwerknemers
+where geslacht = 2 and gemeente like 'Leuven';
 
 
